@@ -21,18 +21,20 @@
 
 <body>
   <div class="container">
-    <div class="col-md-5">
+    <!-- <div class="col-md-12 header"></div> -->
+    <div class="col-md-5 ">
+      
       <div class="row">
-        <div class="col-md-8 currency">Валюта</div>
-        <div class="col-md-4 dropdown curreCheckbox">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
+        <div class="col currency">Валюта</div>
+        <div class="col dropdown curreCheckbox">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            Dropdown
+            Гривня
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <button class="dropdown-item" type="button">Action</button>
-            <button class="dropdown-item" type="button">Another action</button>
-            <button class="dropdown-item" type="button">Something else here</button>
+            <button class="dropdown-item" type="button">Гривня</button>
+            <button class="dropdown-item" type="button">Долар</button>
+            <button class="dropdown-item" type="button">Євро</button>
           </div>
         </div>
 
@@ -41,8 +43,8 @@
 
     <div class="col-md-5">
       <div class="row">
-        <div class="col-md-8 contribution">Сумма внеску</div>
-        <div class="col-md-4 input-group">
+        <div class="col contribution">Сумма внеску</div>
+        <div class="col input-group">
           <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
           <div class="input-group-append">
             <span class="input-group-text">$</span>
@@ -53,8 +55,8 @@
 
     <div class="col-md-5">
       <div class="row">
-        <div class="col-md-8 currency">Річна % ставка</div>
-        <div class="col-md-4 input-group">
+        <div class="col currency">Річна % ставка</div>
+        <div class="col input-group">
           <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
           <div class="input-group-append">
             <span class="input-group-text">$</span>
@@ -65,15 +67,15 @@
 
     <div class="col-md-5">
       <div class="row">
-        <label for="datepicker" class="col-md-3 col-form-label">Дата</label>
-        <input class="cold-md-9" id="datepicker" width="276" />
+        <label for="datepicker" class="col col-form-label">Дата</label>
+        <input class="col" id="datepicker" width="276px" />
       </div>
     </div>
 
     <div class="col-md-5">
       <div class="row">
-        <div class="col-md-6 currency">Річна % ставка</div>
-        <div class="col-md-6 input-group">
+        <div class="col currency">Річна % ставка</div>
+        <div class="col input-group">
 
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -83,12 +85,15 @@
             <button class="dropdown-item" type="button">Місяців</button>
             <button class="dropdown-item" type="button">Років</button>
           </div>
-
-
           <input type="text" class="form-control">
         </div>
       </div>
     </div>
+    <div class="col-md-5">
+        <div class="row">
+            <button type="button" class="btn btn-primary btn-lg btn-block">Розрахувати</button>
+    </div>
+  </div>
   </div>
   </div>
   </div>
