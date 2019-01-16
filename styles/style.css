@@ -37,24 +37,6 @@
     height: 50px;
 }
 
-.test {
-    display: block;
-    width: 100px;
-    height: 100px;
-
-}
-
-.test:hover {
-    width: 50px;
-
-}
-
-.test::before {
-    content: "Hover Text";
-    position: absolute;
-    top: calc(50% - 12px);
-    left: calc(50% - 40px);
-    color: #ffffff;
-    opacity: 0;
-    z-index: 10;
+.curreCheckbox >button::first-letter, .dropdown-menu > button::first-letter {
+    color: green;
 }
