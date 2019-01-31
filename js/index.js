@@ -1,3 +1,4 @@
+// const Calculator = require('./calculator');
 let CURRENCY;
 let AMOUNT_OF_CONTRIBUTION;
 let YEAR_RATE;
@@ -29,21 +30,6 @@ class Calculator {
         this.term = new Date(term);
         this.percents = 0;
 
-        function daysInMonth(m, y) {
-            return m === 2 ? y & 3 || !(y % 25) && y & 15 ? 28 : 29 : 30 + (m + (m >> 3) & 1);
-        };
-
-        function calcMonthRevenue() {
-            console.log(this.contr, this.rate, this.term);
-        };
-
-        function setResult(val) {
-            result = val;
-        }
-
-        function showResult() {
-            console.log(result);
-        }
     }
     numberOfMonth(dat1, dat2) {
         function monthDiff(d2, d1) {
@@ -78,40 +64,51 @@ class Calculator {
         }
         return diffDate(dat1, dat2);
 }   
-    getDayRate() {
-       // console.log(((this.result / 100) * +this.rate) / 365);
-        this.percents = ((this.result / 100) * +this.rate) / 365;
-        return ((this.result / 100) * +this.rate) / 365; 
-    }
-
+    
     setResult(val) {
         this.result += val;
     }
 
     caclFirstAndLastMonth(first, last) {
         console.log(first,last);
-        let firstMonthDaysLeft = getDaysInMonth(first.getMonth() + 1, first.getFullYear()) - first.getDate(),
-            lastMonthDaysLeft  = getDaysInMonth(last.getMonth() + 1, last.getFullYear()) - first.getDate();
+        let firstMonthDaysLeft = getDaysInMonth(first.getMonth() + 1, first.getFullYear()),
+            lastMonthDaysLeft  = getDaysInMonth(last.getMonth() + 1, last.getFullYear());
 
-       if(first.getMonth() != last.getMonth()){
+       if(first.getMonth() != last.getMonth() && first.getMonth() + 1 != last.getMonth()){
         for(let i = 0; i < firstMonthDaysLeft; i++) {
-            console.log("1");
-            this.setResult(this.getDayRate());
+            console.log(firstMonthDaysLeft);
+            calcFirstMonth();
+
         }
 
         for(let i = 0; i < lastMonthDaysLeft; i++) {
-            this.setResult(this.getDayRate());
+            this.setResult(getDayRate());
         }
     }else {
-        for(let i = 0; i < last.getDate() - first.getDate(); i++) {
-            console.log("2", i);
-            this.setResult(this.getDayRate());
-        }
+        calcFirstMonth();
     }
+        function calcFirstMonth() {
+            for(let i = 0; i < getDaysInMonth(first.getMonth() + 1, first.getFullYear()) - first.getDate(); i++) {
+                console.log(getDayRate());
+                // this.setResult(this.getDayRate());
+            }
+        }
+        function calcLastMonth(){
+            for(let i = 0; i < getDaysInMonth(last.getMonth() + 1, last.getFullYear()) - last.getDate(); i++) {
+                this.setResult(getDayRate());
+            }
+        }
         function getDaysInMonth(m, y) {
             return m===2 ? y & 3 || !(y%25) && y & 15 ? 28 : 29 : 30 + (m+(m>>3)&1);
         }
-        console.log(this.result);
+
+        function getDayRate() {
+            console.log(rate);
+            let res = (((this.result / 100) * this.rate) / 365);
+            console.log(res, this.result);
+            this.percents = res;
+            return res; 
+        }
     }
       
 }
@@ -121,7 +118,8 @@ function calculate() {
     YEAR_RATE = $('#year-rate').val();
     TERM_OF_PAYMENT = new Date($('#datepicker').val());
 
-    let calculator = new Calculator(AMOUNT_OF_CONTRIBUTION, YEAR_RATE, TERM_OF_PAYMENT);
+    let calculator = new Calculator(+AMOUNT_OF_CONTRIBUTION, +YEAR_RATE, TERM_OF_PAYMENT);
+    // console.log(calculator.term.getDate());
     calculator.caclFirstAndLastMonth(today, calculator.term);
     //console.log(calculator.getDayRate());
 

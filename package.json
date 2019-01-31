@@ -1,0 +1,27 @@
+{
+  "name": "deposit-calculator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "moment": "^2.24.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bohdan1994/DepositCalculator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bohdan1994/DepositCalculator/issues"
+  },
+  "homepage": "https://github.com/Bohdan1994/DepositCalculator#readme"
+}
