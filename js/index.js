@@ -34,84 +34,96 @@ class Calculator {
     numberOfMonth(dat1, dat2) {
         function monthDiff(d2, d1) {
             var months;
-            console.log(d2, d1);
             months = (d2.getFullYear() - d1.getFullYear()) * 12;
-            months -= d1.getMonth() + 1;
-            months += d2.getMonth() + 1;
+            months += d1.getMonth();
+            months -= d2.getMonth();
             return months <= 0 ? 0 : months;
         }
-        
+
         function daysInMonth(date) {
             return new Date(date.getYear(), date.getMonth() + 1, 0).getDate();
-        }    
-        
+        }
+
         function diffDate(date1, date2) {
             if (date2 && date2.getTime() && !isNaN(date2.getTime())) {
                 var months = monthDiff(date1, date2);
+                console.log(months);
                 var days = 0;
-        
+                console.log(date1.getUTCDate() >= date2.getUTCDate());
+
                 if (date1.getUTCDate() >= date2.getUTCDate()) {
-                    days = date1.getUTCDate() - date2.getUTCDate();
-                }
-                else {
+                    days += date1.getDate() - date1.getUTCDate();
+                    days += date2.getDate();
+
+                    for(let i = 0, curMonth = date2.getMonth() ; i < curMonth - date1.getMonth(); i++) {
+                        if(i == 0) {
+                            days += daysInMonth(new Date(date2.getYear(), date2.getMonth() - i));
+                        }
+                        days += daysInMonth(new Date(date2.getYear(), date2.getMonth() - i));
+                        console.log(daysInMonth(new Date(date2.getYear(), date2.getMonth() - i)), i);
+                    }
+                } else {
                     months--;
                     days = date1.getUTCDate() - date2.getUTCDate() + daysInMonth(date2);
                 }
-                return {mm : months, dd: days};
-                // Use the variables months and days how you need them.
+                return {
+                    mm: months,
+                    dd: days
+                };
             }
-           
+
         }
         return diffDate(dat1, dat2);
-}   
-    
-    setResult(val) {
-        this.result += val;
     }
 
     caclFirstAndLastMonth(first, last) {
-        console.log(first,last);
-        let firstMonthDaysLeft = getDaysInMonth(first.getMonth() + 1, first.getFullYear()),
-            lastMonthDaysLeft  = getDaysInMonth(last.getMonth() + 1, last.getFullYear());
-
-       if(first.getMonth() != last.getMonth() && first.getMonth() + 1 != last.getMonth()){
-        for(let i = 0; i < firstMonthDaysLeft; i++) {
-            console.log(firstMonthDaysLeft);
-            calcFirstMonth();
-
+        let result = this.result,
+            rate = this.rate,
+            percents = this.percents;
+            console.log(this.numberOfMonth(first, last));
+        if (first.getFullYear() == last.getFullYear()) {
+            if (first.getMonth() == last.getMonth()) {
+                calcFirstMonth();
+            } else if (first.getMonth() + 1 == last.getMonth()) {
+                calcFirstMonth();
+                calcLastMonth();
+            }else {
+                let a = this.numberOfMonth(first, last);
+                // console.log(a);
+            }
         }
 
-        for(let i = 0; i < lastMonthDaysLeft; i++) {
-            this.setResult(getDayRate());
-        }
-    }else {
-        calcFirstMonth();
-    }
         function calcFirstMonth() {
-            for(let i = 0; i < getDaysInMonth(first.getMonth() + 1, first.getFullYear()) - first.getDate(); i++) {
-                console.log(getDayRate());
-                // this.setResult(this.getDayRate());
+            for (let i = 0; i <= getDaysInMonth(first.getMonth() + 1, first.getFullYear()) - first.getDate(); i++) {
+                // console.log(i);
+                result += getDayRate();
+                // console.log('1Month');
             }
         }
-        function calcLastMonth(){
-            for(let i = 0; i < getDaysInMonth(last.getMonth() + 1, last.getFullYear()) - last.getDate(); i++) {
-                this.setResult(getDayRate());
+
+        function calcLastMonth() {
+            for (let i = 0; i < last.getDate(); i++) {
+                result += getDayRate();
+                // console.log('2-----', i);
             }
         }
+
         function getDaysInMonth(m, y) {
-            return m===2 ? y & 3 || !(y%25) && y & 15 ? 28 : 29 : 30 + (m+(m>>3)&1);
+            return m === 2 ? y & 3 || !(y % 25) && y & 15 ? 28 : 29 : 30 + (m + (m >> 3) & 1);
         }
 
         function getDayRate() {
-            console.log(rate);
-            let res = (((this.result / 100) * this.rate) / 365);
-            console.log(res, this.result);
-            this.percents = res;
-            return res; 
+            // console.log(result);
+            let res = (((result / 100) * rate) / 365);
+            percents = res;
+            return res;
         }
+        console.log(result.toFixed(2));
     }
-      
+
+
 }
+
 function calculate() {
     $('.table-content').html(null);
     AMOUNT_OF_CONTRIBUTION = $("#among-of-contribution").val();
@@ -120,10 +132,11 @@ function calculate() {
 
     let calculator = new Calculator(+AMOUNT_OF_CONTRIBUTION, +YEAR_RATE, TERM_OF_PAYMENT);
     // console.log(calculator.term.getDate());
+    calculator.numberOfMonth();
     calculator.caclFirstAndLastMonth(today, calculator.term);
     //console.log(calculator.getDayRate());
 
-    
+
 }
 
 //     // let daysCounter = (date) => Math.ceil(Math.abs(new Date(date).getTime() - new Date().getTime()) / (1000 * 3600 * 24));
