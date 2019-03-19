@@ -46,26 +46,31 @@ class Calculator {
 
         function diffDate(date1, date2) {
             if (date2 && date2.getTime() && !isNaN(date2.getTime())) {
-                var months = monthDiff(date1, date2);
-                console.log(months);
-                var days = 0;
-                console.log(date1.getUTCDate() >= date2.getUTCDate());
-
-                if (date1.getUTCDate() >= date2.getUTCDate()) {
-                    days += date1.getDate() - date1.getUTCDate();
-                    days += date2.getDate();
-
-                    for(let i = 0, curMonth = date2.getMonth() ; i < curMonth - date1.getMonth(); i++) {
-                        if(i == 0) {
-                            days += daysInMonth(new Date(date2.getYear(), date2.getMonth() - i));
-                        }
-                        days += daysInMonth(new Date(date2.getYear(), date2.getMonth() - i));
-                        console.log(daysInMonth(new Date(date2.getYear(), date2.getMonth() - i)), i);
-                    }
-                } else {
-                    months--;
-                    days = date1.getUTCDate() - date2.getUTCDate() + daysInMonth(date2);
+                let months = monthDiff(date1, date2);
+               // console.log(months);
+                let days = 0;
+                // console.log(date2.getUTCDate());
+                // console.log(date1, date2);
+         
+                if (date1.getDate() <= date2.getDate() && date1.getMonth() == date2.getMonth()) {
+                    days += date2.getDate() - date1.getDate();
+                    console.log(days);
+                } 
+                else if(date1.getDate() <= date2.getDate() && date1.getMonth() < date2.getMonth()) {
+                    // months--;
+                    days =  daysInMonth(date1) - date1.getDate() + date2.getDate();
+                    console.log(days, months);
                 }
+                else if(date1.getDate() >= date2.getDate() && date1.getMonth() >  date1.getMonth() &&  date1.getFullYear() >=  date2.getFullYear()){
+                    console.log('Enter correct date');
+                  }
+                else if(date1.getDate() >= date2.getDate() && date1.getMonth() <= date2.getMonth()){
+                    months--;
+                    days = daysInMonth(date1) - date1.getDate() + date2.getDate();
+                    console.log(months,  days);
+                }
+
+              
                 return {
                     mm: months,
                     dd: days
@@ -132,8 +137,8 @@ function calculate() {
 
     let calculator = new Calculator(+AMOUNT_OF_CONTRIBUTION, +YEAR_RATE, TERM_OF_PAYMENT);
     // console.log(calculator.term.getDate());
-    calculator.numberOfMonth();
-    calculator.caclFirstAndLastMonth(today, calculator.term);
+    calculator.numberOfMonth(new Date(),TERM_OF_PAYMENT);
+   // calculator.caclFirstAndLastMonth(today, calculator.term);
     //console.log(calculator.getDayRate());
 
 
